@@ -1,0 +1,55 @@
+<div class="container mt-4 css-container-table">
+  <!-- Barra de búsqueda -->
+  <div class="mb-3">
+    <h2 class="css-title-filter">Customers</h2>
+    <div class="css-input-container">
+      <input type="text" class="form-control css-input-filter" placeholder="Customer Name"
+           [(ngModel)]="filter" (keyup.enter)="search()" />
+           <span class="material-icons search-icon">search</span>
+    </div>
+  </div>
+
+  <!-- Tabla de clientes -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th (click)="sortBy('name')">
+          Customer Name <span class="material-icons" [ngClass]="sortColumn === 'name' ? 'active' : ''">arrow_upward</span>
+        </th>
+        <th (click)="sortBy('lastOrderDate')">
+          Last Order Date <span class="material-icons" [ngClass]="sortColumn === 'lastOrderDate' ? 'active' : ''">arrow_upward</span>
+        </th>
+        <th (click)="sortBy('nextPredictedOrder')">
+          Next Predicted Order <span class="material-icons" [ngClass]="sortColumn === 'nextPredictedOrder' ? 'active' : ''">arrow_upward</span>
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.lastOrderDate }}</td>
+        <td>{{ customer.nextPredictedOrder }}</td>
+        <td>
+          <button class="btn-action view-orders" (click)="viewOrders(customer)">View Orders</button>
+          <button class="btn-action new-order" (click)="newOrder(customer)">New Order</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Paginación con Bootstrap -->
+  <nav class="pagination-container">
+    <ul class="pagination css-pagination">
+      <li class="page-item" [class.disabled]="page === 0">
+        <a class="page-link" (click)="changePage(-1)">Previous</a>
+      </li>
+      <li class="page-item">
+        <span class="page-link">{{ page + 1 }}</span>
+      </li>
+      <li class="page-item">
+        <a class="page-link" (click)="changePage(1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>

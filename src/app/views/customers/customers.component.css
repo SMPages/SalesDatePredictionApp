@@ -1,0 +1,76 @@
+.css-container-table {
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    padding: 0px;
+    padding-top:10px;
+    background-color: white;
+    max-width: 90% !important;
+}
+
+.css-title-filter {
+    display: inline-flex;
+    width: fit-content;
+    padding-left: 20px;
+}
+.css-input-container {
+    display: inline-flex;
+    width: 50%;
+    float: right;
+    margin-right:10px;
+}
+.css-input-filter {
+    display: inline-flex;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0px;
+    padding-left: 35px;
+}
+
+.search-icon {
+    position: initial;
+    font-size: 22px;
+    color: #777;
+    cursor: pointer;
+    padding-top: 7px;
+  }
+  
+  th {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  th .material-icons {
+    font-size: 16px;
+    vertical-align: middle;
+    opacity: 0.5;
+  }
+
+  th .material-icons.active {
+    color: #007bff;
+    opacity: 1;
+  }
+
+.pagination-container {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 10px;
+}
+
+.btn-action {
+    border: none;
+    background: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
+  .view-orders {
+    color: red;
+  }
+  
+  .new-order {
+    color: green;
+  }
