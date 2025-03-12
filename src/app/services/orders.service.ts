@@ -10,6 +10,22 @@ export interface Order {
   shipAddress: string;
   shipCity: string;
 }
+export interface CreateOrderRequest {
+  employee: string;
+  shipper: string;
+  shipName: string;
+  shipAddress: string;
+  shipCity: string;
+  shipCountry: string;
+  orderDate: string;
+  requiredDate: string;
+  shippedDate: string;
+  freight: number;
+  product: string;
+  unitPrice: number;
+  quantity: number;
+  discount: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +37,8 @@ export class OrdersService {
 
   getOrdersByCustomer(customerId: number): Observable<Order[]> {
     return this.http.get<Order[]>(`${this.apiUrl}/customer/${customerId}`);
+  }
+  createOrder(order: CreateOrderRequest): Observable<Order> {
+    return this.http.post<Order>(this.apiUrl, order);
   }
 }

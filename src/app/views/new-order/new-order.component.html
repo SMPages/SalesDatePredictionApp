@@ -1,1 +1,91 @@
-<p>new-order works!</p>
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <h2>Customer {{ customerName }} - New Order</h2>
+    
+    <div>
+      <label>Employee*</label>
+      <mat-select formControlName="employeeId" required>
+        <mat-option *ngFor="let employee of employees" [value]="employee.id">
+          {{ employee.name }}
+        </mat-option>
+      </mat-select>
+    </div>
+    
+    <div>
+      <label>Shipper*</label>
+      <mat-select formControlName="shipperId" required>
+        <mat-option *ngFor="let shipper of shippers" [value]="shipper.id">
+          {{ shipper.name }}
+        </mat-option>
+      </mat-select>
+    </div>
+    
+    <div>
+      <label>Ship Name*</label>
+      <input matInput formControlName="shipName" required>
+    </div>
+    
+    <div>
+      <label>Ship Address*</label>
+      <input matInput formControlName="shipAddress" required>
+    </div>
+    
+    <div>
+      <label>Ship City*</label>
+      <input matInput formControlName="shipCity" required>
+    </div>
+    
+    <div>
+      <label>Ship Country*</label>
+      <input matInput formControlName="shipCountry" required>
+    </div>
+    
+    <div>
+      <label>Order Date*</label>
+      <input matInput formControlName="orderDate" type="date" required>
+    </div>
+    
+    <div>
+      <label>Required Date*</label>
+      <input matInput formControlName="requiredDate" type="date" required>
+    </div>
+    
+    <div>
+      <label>Shipped Date*</label>
+      <input matInput formControlName="shippedDate" type="date" required>
+    </div>
+    
+    <div>
+      <label>$ Freight*</label>
+      <input matInput formControlName="freight" type="number" required>
+    </div>
+    
+    <h3>Order Details</h3>
+    
+    <div>
+      <label>Product*</label>
+      <mat-select formControlName="productId" required>
+        <mat-option *ngFor="let product of products" [value]="product.id">
+          {{ product.name }}
+        </mat-option>
+      </mat-select>
+    </div>
+    
+    <div>
+      <label>$ Unit Price*</label>
+      <input matInput formControlName="unitPrice" type="number" required>
+    </div>
+    
+    <div>
+      <label>Quantity*</label>
+      <input matInput formControlName="quantity" type="number" required>
+    </div>
+    
+    <div>
+      <label>Discount*</label>
+      <input matInput formControlName="discount" type="number" step="0.01" required>
+    </div>
+    
+    <button mat-button type="button" (click)="closeDialog()">CLOSE</button>
+    <button mat-flat-button color="primary" type="submit">SAVE</button>
+  </form>
+  
