@@ -1,76 +1,44 @@
-.css-container-table {
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ccc; 
-    border-radius: 5px;
-    padding: 0px;
-    padding-top:10px;
-    background-color: white;
-    max-width: 90% !important;
-}
-
-.css-title-filter {
-    display: inline-flex;
-    width: fit-content;
-    padding-left: 20px;
-}
-.css-input-container {
-    display: inline-flex;
-    width: 50%;
-    float: right;
-    margin-right:10px;
-}
-.css-input-filter {
-    display: inline-flex;
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    border-radius: 0px;
-    padding-left: 35px;
-}
-
-.search-icon {
-    position: initial;
-    font-size: 22px;
-    color: #777;
-    cursor: pointer;
-    padding-top: 7px;
+.container-table {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
   }
   
-  th {
-    cursor: pointer;
-    user-select: none;
+  .title-table {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    max-width: 20%;
+    display: inline;
+  }
+  
+  .search-box {
+    display: inline;
+    float: right;
+    width: 100%;
+    max-width: 50%;
+    margin-bottom: 16px;
+    background-color: #ffffff;
   }
 
-  th .material-icons {
-    font-size: 16px;
-    vertical-align: middle;
-    opacity: 0.5;
+  .css-host-filters {
+
+  }
+  .css-host-filters .mat-mdc-form-field {
+    margin: 0px;
   }
 
-  th .material-icons.active {
-    color: #007bff;
-    opacity: 1;
-  }
-
-.pagination-container {
-    display: flex;
-    justify-content: flex-end; 
-    margin-top: 10px;
-}
-
-.btn-action {
-    border: none;
-    background: none;
+  .view-orders {
+    color: #d32f2f !important; 
     font-weight: bold;
     text-transform: uppercase;
-    cursor: pointer;
-    padding: 5px 10px;
-  }
-  
-  .view-orders {
-    color: red;
   }
   
   .new-order {
-    color: green;
+    color: #388e3c !important;
+    font-weight: bold;
+    text-transform: uppercase;
   }

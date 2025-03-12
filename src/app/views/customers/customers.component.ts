@@ -1,77 +1,79 @@
-import { Component, OnInit } from '@angular/core';
-import { CustomersService } from '../../services/customers.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-import { CustomerOrdersComponent } from '../customer-orders/customer-orders.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+
+import { CustomersService } from '../../services/customers.service';
+import { OrdersComponent } from '../../views/orders/orders.component';
+import { NewOrderComponent } from '../../views/new-order/new-order.component';
+
+export interface Customer {
+  name: string;
+  lastOrderDate: string;
+  nextPredictedOrder: string;
+}
 
 @Component({
   selector: 'app-customers',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule
+  ],
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.css'],
+  styleUrls: ['./customers.component.css']
 })
 export class CustomersComponent implements OnInit {
-  customers: any[] = []; 
-  customers$: Observable<any[]> = new Observable();
-  filter = '';
-  page = 0;
-  pageSize = 5;
-  sortColumn = 'name';
-  sortDirection = 1;
+  displayedColumns: string[] = ['name', 'lastOrderDate', 'nextPredictedOrder', 'actions'];
+  dataSource = new MatTableDataSource<Customer>(); // ✅ Ahora MatTableDataSource está importado correctamente
 
-  constructor(private customersService: CustomersService, private dialog: MatDialog) {}
+  @ViewChild(MatPaginator) paginator!: MatPaginator; // ✅ Ahora MatPaginator está importado correctamente
+  @ViewChild(MatSort) sort!: MatSort; // ✅ Ahora MatSort está importado correctamente
+
+  constructor(private customerService: CustomersService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.loadCustomers();
   }
 
   loadCustomers() {
-    this.customersService
-      .getCustomers(this.filter, this.page, this.pageSize, this.sortColumn, this.sortDirection)
-      .subscribe(data => {
-        this.customers = [...data]; 
-      });
-  }
-  search() {
-    this.page = 0;
-    this.loadCustomers();
-  }
-
-  changePage(direction: number) {
-    this.page += direction;
-    if (this.page < 0) this.page = 0;
-    this.loadCustomers();
-  }
-
-  sortBy(column: string) {
-    if (this.sortColumn === column) {
-      this.sortDirection *= -1; // 🔄 Cambia de ascendente a descendente
-    } else {
-      this.sortColumn = column;
-      this.sortDirection = 1; // 🔼 Predeterminado ascendente
-    }
-    this.sortTable();
-  }
-
-  sortTable() {
-    this.customers.sort((a, b) => {
-      if (a[this.sortColumn] > b[this.sortColumn]) return 1 * this.sortDirection;
-      if (a[this.sortColumn] < b[this.sortColumn]) return -1 * this.sortDirection;
-      return 0;
+    this.customerService.getCustomers().subscribe(customers => {
+      this.dataSource.data = customers;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
-  viewOrders(customer: any) {
-    this.dialog.open(CustomerOrdersComponent, {
-      width: '800px',
-      data: customer
-    });
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 
-  newOrder(customer: any) {
-    alert(`Crear nueva orden para ${customer.name}`);
+  openOrders(customer: Customer) {
+    this.dialog.open(OrdersComponent, { 
+      data: customer,
+      panelClass: 'custom-orders-modal'
+    });
+    console.log(customer);
+  }
+
+  openNewOrder(customer: Customer) {
+    this.dialog.open(NewOrderComponent, { data: customer });
   }
 }
