@@ -74,6 +74,10 @@ export class CustomersComponent implements OnInit {
   }
 
   openNewOrder(customer: Customer) {
-    this.dialog.open(NewOrderComponent, { data: customer });
+    this.dialog.open(NewOrderComponent, 
+      {
+         data: customer,
+         panelClass: 'custom-new-orders-modal'
+      });
   }
 }

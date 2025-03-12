@@ -1,24 +1,55 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { OrdersService } from '../../services/orders.service';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-new-order',
+  standalone: true,
   templateUrl: './new-order.component.html',
-  styleUrls: ['./new-order.component.scss']
+  styleUrls: ['./new-order.component.css'],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+  ],
 })
-export class NewOrderComponent {
-  orderForm: FormGroup;
+export class NewOrderComponent implements OnInit {
+  @Input() employees: any[] = [];
+  @Input() shippers: any[] = [];
+  @Input() products: any[] = [];
+  
+  orderForm!: FormGroup;
+  customerName: string = '';
 
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<NewOrderComponent>,
-    private ordersService: OrdersService
-  ) {
+    private ordersService: OrdersService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  ngOnInit(): void {
+    this.customerName = this.data?.name || 'Unknown';
+    
     this.orderForm = this.fb.group({
-      employee: ['', Validators.required],
-      shipper: ['', Validators.required],
+      employeeId: ['', Validators.required],
+      shipperId: ['', Validators.required],
       shipName: ['', Validators.required],
       shipAddress: ['', Validators.required],
       shipCity: ['', Validators.required],
@@ -27,7 +58,7 @@ export class NewOrderComponent {
       requiredDate: ['', Validators.required],
       shippedDate: ['', Validators.required],
       freight: ['', [Validators.required, Validators.min(0)]],
-      product: ['', Validators.required],
+      productId: ['', Validators.required],
       unitPrice: ['', [Validators.required, Validators.min(0)]],
       quantity: ['', [Validators.required, Validators.min(1)]],
       discount: ['', [Validators.required, Validators.min(0), Validators.max(100)]]
