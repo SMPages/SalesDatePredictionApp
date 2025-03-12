@@ -46,26 +46,26 @@
         <input matInput formControlName="shipCountry" required>
         </mat-form-field>
     
-        <mat-form-field>
+        <mat-form-field appearance="fill">
             <mat-label>Order Date</mat-label>
-            <input matInput [matDatepicker]="orderDatePicker" formControlName="orderDate" required>
-            <mat-datepicker-toggle matIconSuffix [for]="orderDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #orderDatePicker></mat-datepicker>
-        </mat-form-field>
-    
-        <mat-form-field>
+            <input matInput [matDatepicker]="picker1" formControlName="orderDate" required type="text" (keydown)="blockTextInput($event)">
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          
+          <mat-form-field appearance="fill">
             <mat-label>Required Date</mat-label>
-            <input matInput [matDatepicker]="requiredDatePicker" formControlName="requiredDate" required>
-            <mat-datepicker-toggle matIconSuffix [for]="requiredDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #requiredDatePicker></mat-datepicker>
-        </mat-form-field>
-    
-        <mat-form-field>
+            <input matInput [matDatepicker]="picker2" formControlName="requiredDate" required type="text" (keydown)="blockTextInput($event)">
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          
+          <mat-form-field appearance="fill">
             <mat-label>Shipped Date</mat-label>
-            <input matInput [matDatepicker]="shippedDatePicker" formControlName="shippedDate" required>
-            <mat-datepicker-toggle matIconSuffix [for]="shippedDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #shippedDatePicker></mat-datepicker>
-        </mat-form-field>
+            <input matInput [matDatepicker]="picker3" formControlName="shippedDate" required  type="text" (keydown)="blockTextInput($event)">
+            <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field>
     </div>
     <div class="grid-container">
         <mat-form-field >

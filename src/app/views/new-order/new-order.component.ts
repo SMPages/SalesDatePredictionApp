@@ -7,10 +7,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, DateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { forkJoin } from 'rxjs';
+
 
 @Component({
   selector: 'app-new-order',
@@ -26,14 +28,17 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     MatDialogModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,  
+  ],
+  providers: [
+    MatNativeDateModule 
   ],
 })
 export class NewOrderComponent implements OnInit {
   @Input() employees: any[] = [];
   @Input() shippers: any[] = [];
   @Input() products: any[] = [];
-  
+
   orderForm!: FormGroup;
   customerName: string = '';
 
@@ -46,7 +51,7 @@ export class NewOrderComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerName = this.data?.name || 'Unknown';
-    
+
     this.orderForm = this.fb.group({
       employeeId: ['', Validators.required],
       shipperId: ['', Validators.required],
@@ -56,12 +61,28 @@ export class NewOrderComponent implements OnInit {
       shipCountry: ['', Validators.required],
       orderDate: ['', Validators.required],
       requiredDate: ['', Validators.required],
-      shippedDate: ['', Validators.required],
+      shippedDate: ['', [Validators.required]],
       freight: ['', [Validators.required, Validators.min(0)]],
       productId: ['', Validators.required],
       unitPrice: ['', [Validators.required, Validators.min(0)]],
       quantity: ['', [Validators.required, Validators.min(1)]],
       discount: ['', [Validators.required, Validators.min(0), Validators.max(100)]]
+    });
+
+    this.loadData();
+  }
+  private loadData(): void {
+    forkJoin({
+      employees: this.ordersService.getEmployees(),
+      shippers: this.ordersService.getShippers(),
+      products: this.ordersService.getProducts()
+    }).subscribe({
+      next: (result) => {
+        this.employees = result.employees;
+        this.shippers = result.shippers;
+        this.products = result.products;
+      },
+      error: (err) => console.error('Error loading data', err)
     });
   }
 
@@ -75,5 +96,9 @@ export class NewOrderComponent implements OnInit {
 
   close() {
     this.dialogRef.close(false);
+  }
+
+  blockTextInput(event: KeyboardEvent) {
+    event.preventDefault();
   }
 }
