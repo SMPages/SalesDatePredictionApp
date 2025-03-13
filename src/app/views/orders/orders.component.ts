@@ -36,14 +36,14 @@ export class OrdersComponent implements OnInit {
 
   constructor(
     private ordersService: OrdersService,
-    @Inject(MAT_DIALOG_DATA) public data: { id: number; name: string }
+    @Inject(MAT_DIALOG_DATA) public data: { customerId: number; customerName: string }
   ) {
     console.log('Hola, soy data' + data);
-    this.customerName = data.name;
+    this.customerName = data.customerName;
   }
 
   ngOnInit() {
-    this.ordersService.getOrdersByCustomer(this.data.id).subscribe(orders => {
+    this.ordersService.getOrdersByCustomer(this.data.customerId).subscribe(orders => {
       this.dataSource.data = orders;
     });
   }

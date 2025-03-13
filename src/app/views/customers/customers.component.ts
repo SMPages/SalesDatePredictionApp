@@ -17,7 +17,8 @@ import { OrdersComponent } from '../../views/orders/orders.component';
 import { NewOrderComponent } from '../../views/new-order/new-order.component';
 
 export interface Customer {
-  name: string;
+  customerId: number;
+  customerName: string;
   lastOrderDate: string;
   nextPredictedOrder: string;
 }

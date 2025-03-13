@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Customer {
-  id: number;
-  name: string;
+  customerId: number;
+  customerName: string;
   lastOrderDate: string;
   nextPredictedOrder: string;
 }
@@ -14,7 +14,7 @@ export interface Customer {
 })
 export class CustomersService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5153/api/customers'; // Reemplaza con tu API real
+  private apiUrl = 'http://localhost:5281/api/customers'; 
 
   getCustomers(filter: string = ''): Observable<Customer[]> {
     return this.http.get<Customer[]>(`${this.apiUrl}?search=${filter}`);

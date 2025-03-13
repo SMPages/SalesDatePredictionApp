@@ -10,7 +10,7 @@
   
   .over-flow-auto {
     overflow-y: scroll;
-    height:fit-content;
+    height: 80vh;
   }
   
   .order-form {
