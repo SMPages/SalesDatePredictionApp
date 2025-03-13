@@ -70,7 +70,7 @@ export class NewOrderComponent implements OnInit {
       productid: ['', Validators.required],
       unitprice: ['', [Validators.required, Validators.min(0)]],
       qty: ['', [Validators.required, Validators.min(1)]],
-      discount: ['', [Validators.required, Validators.min(0), Validators.max(100)]]
+      discount: ['', [Validators.required, Validators.min(0), Validators.max(1)]]
     });
 
     this.loadData();
@@ -109,8 +109,18 @@ export class NewOrderComponent implements OnInit {
         customerId: this.customerId  // Agregamos el ID del cliente
       };
 
-      this.ordersService.createOrder(orderData).subscribe(() => {
-        this.dialogRef.close(true);
+      this.ordersService.createOrder(orderData).subscribe({
+        next: (response) => {
+          if (response) {
+            this.dialogRef.close(true); 
+          } else {
+            alert("Error al crear la orden. Inténtalo nuevamente."); 
+          }
+        },
+        error: (err) => {
+          console.error("Error al crear la orden:", err);
+          alert("Hubo un error en el servidor. Por favor, intenta nuevamente."); 
+        }
       });
     }
   }
@@ -121,5 +131,16 @@ export class NewOrderComponent implements OnInit {
 
   blockTextInput(event: KeyboardEvent) {
     event.preventDefault();
+  }
+  validateDiscount() {
+    let discountControl = this.orderForm.get('discount');
+    if (discountControl) {
+      let value = discountControl.value;
+      if (value < 0) {
+        discountControl.setValue(0);
+      } else if (value > 1) {
+        discountControl.setValue(1);
+      }
+    }
   }
 }
