@@ -19,8 +19,7 @@
     color: #FFD700;
   }
   
-  .logo {
-    font-size: 1.8rem;
-    font-weight: bold;
+  .logo-img {
+    height: 40px; 
+    margin-left: auto; 
   }
-  

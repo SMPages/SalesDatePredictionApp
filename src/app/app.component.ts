@@ -11,4 +11,4 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     <router-outlet></router-outlet>
   `
 })
-export class AppComponent {}
+export class AppComponent {title = 'sales-date-prediction';}

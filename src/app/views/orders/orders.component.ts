@@ -2,7 +2,8 @@ import { Component, Inject, AfterViewInit, ViewChild, OnInit } from '@angular/co
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { OrdersService, Order } from '../../services/orders.service';
+import { OrdersService } from '../../services/orders.service';
+import { Order } from '../../models/order.model';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
@@ -15,7 +16,7 @@ import { ViewEncapsulation } from '@angular/core';
   selector: 'app-orders',
   standalone: true,
   templateUrl: './orders.component.html',
-  styleUrls: ['./orders.component.scss'],
+  styleUrls: ['./orders.component.css'],
   encapsulation: ViewEncapsulation.None,
   imports: [
     CommonModule,

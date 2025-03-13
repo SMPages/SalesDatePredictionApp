@@ -76,7 +76,7 @@ export class NewOrderComponent implements OnInit {
     this.loadData();
   }
 
-  private loadData(): void {
+  public loadData(): void {
     this.employeesService.getEmployees().subscribe({
       next: (employees) => {
         this.employees = employees;
